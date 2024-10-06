@@ -1,7 +1,6 @@
 title: Evans Notes
 description: A central place to view Evans notes
-remote_theme: pages-themes/architect@v0.2.0
+remote_theme: chauff/cse-theme
 plugins:
 - jekyll-remote-theme # add this line to the plugins list if you already have one
-favicon_ico: "/assets/images/favicon.ico"
 color_scheme: dark
