@@ -1,0 +1,204 @@
+{
+  "main": {
+    "id": "b41330ad8f8a6368",
+    "type": "split",
+    "children": [
+      {
+        "id": "5374ad20f728ae41",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "7d8aec0fd52d3483",
+            "type": "leaf",
+            "state": {
+              "type": "home-tab-view",
+              "state": {}
+            }
+          }
+        ],
+        "stacked": true
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "0961e6d6ea0b466c",
+    "type": "split",
+    "children": [
+      {
+        "id": "2a55dce06cedadd4",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c40d96cc61e6991c",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "byModifiedTime"
+              }
+            }
+          },
+          {
+            "id": "4ac3f7164e24d673",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "tag:#Apple",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "3fc13d196c5127d9",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200
+  },
+  "right": {
+    "id": "07d74b0a925ae7f6",
+    "type": "split",
+    "children": [
+      {
+        "id": "7fe8e69108de5835",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "465ddb9f95297712",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "School Notes/Myth/Myth - 10-2-24.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "83d7cec05d3bbd58",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "64bce69339f376d5",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "School Notes/Myth/Myth - 10-2-24.md"
+              }
+            }
+          },
+          {
+            "id": "4ad3fabda677c03a",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "audio-recorder:Start/stop recording": false,
+      "templater-obsidian:Templater": false,
+      "etymology-lookup:Etymology Lookup": false,
+      "wikipedia-search:Open Article": false,
+      "obsidian-read-it-later:ReadItLater: Save clipboard": false,
+      "markdown-importer:Open format converter": false,
+      "flowershow:Publish with Flowershow": false
+    }
+  },
+  "active": "c40d96cc61e6991c",
+  "lastOpenFiles": [
+    "BagpipesRbetter.github.io/README.md",
+    "BagpipesRbetter.github.io",
+    "Workout logs/Workout log - 10-5-24.md",
+    "Workout logs/Workout log - 10-3-24.md",
+    "Workout logs",
+    "Wikipedia Imports/Zeus.md",
+    "Wikipedia Imports/Typhon.md",
+    "Wikipedia Imports/Titanomachy.md",
+    "Wikipedia Imports/The Legend of Zelda~ Echoes of Wisdom.md",
+    "Wikipedia Imports/Tartarus.md",
+    "Wikipedia Imports/Solvation shell.md",
+    "Wikipedia Imports/Sisyphus.md",
+    "Wikipedia Imports/Prometheus.md",
+    "Wikipedia Imports/Organic compound.md",
+    "Wikipedia Imports/Marbury v. Madison.md",
+    "Wikipedia Imports/Niobe.md",
+    "Wikipedia Imports/Macromolecule.md",
+    "Wikipedia Imports/Lipid.md",
+    "Wikipedia Imports/Leto.md",
+    "Wikipedia Imports/Isomer.md",
+    "Wikipedia Imports/Joost Klein.md",
+    "Wikipedia Imports/Ionic bonding.md",
+    "Wikipedia Imports/Hydrogen bond.md",
+    "Wikipedia Imports/Hydrocarbon.md",
+    "Wikipedia Imports/Hestia.md",
+    "Wikipedia Imports/Hephaestus.md",
+    "Wikipedia Imports/Gerrymandering.md",
+    "Wikipedia Imports/Hecatoncheires.md",
+    "Wikipedia Imports",
+    "templates",
+    "School Notes/Myth",
+    "School Notes/Math",
+    "School Notes/Intern",
+    "School Notes/Gov",
+    "School Notes/Bio",
+    "School Notes",
+    "assets/IMG_1628.jpeg",
+    "assets/IMG_1617.jpg",
+    "assets/IMG_1599.jpg",
+    "assets/IMG_1598.jpg",
+    "assets/IMG_1597.jpg",
+    "assets/IMG_1596.jpg",
+    "assets/IMG_1595.jpg",
+    "assets/IMG_1586.jpg",
+    "assets/IMG_1584.jpg",
+    "assets/IMG_1585.jpg",
+    "Untitled.canvas",
+    "Untitled 1.canvas"
+  ]
+}

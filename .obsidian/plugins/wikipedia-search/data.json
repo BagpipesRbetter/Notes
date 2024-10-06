@@ -1,0 +1,25 @@
+{
+  "language": "en",
+  "searchLimit": 25,
+  "thumbnailWidth": null,
+  "defaultNotePath": "/General files and notes/Wikipedia Imports",
+  "templates": [
+    {
+      "name": "Default",
+      "templateString": "",
+      "createNote": true,
+      "customPath": "/Wikipedia Imports",
+      "useTemplateFile": true,
+      "templateFilePath": "templates/Wikipedia.md"
+    }
+  ],
+  "autoInsertSingleResponseQueries": false,
+  "autoSearchNoteTitle": false,
+  "prioritizeArticleTitle": true,
+  "cleanupIntros": true,
+  "openArticleInFullscreen": false,
+  "openArticlesInBrowser": false,
+  "openCreatedNotes": true,
+  "overrideFiles": true,
+  "showedSurfingMessage": false
+}

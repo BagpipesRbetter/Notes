@@ -1,0 +1,54 @@
+{
+  "command_timeout": 5,
+  "templates_folder": "templates",
+  "templates_pairs": [
+    [
+      "",
+      ""
+    ]
+  ],
+  "trigger_on_file_creation": true,
+  "auto_jump_to_cursor": false,
+  "enable_system_commands": false,
+  "shell_path": "",
+  "user_scripts_folder": "",
+  "enable_folder_templates": true,
+  "folder_templates": [
+    {
+      "folder": "School Notes",
+      "template": "templates/School.md"
+    },
+    {
+      "folder": "Wikipedia Imports",
+      "template": "templates/Wikipedia.md"
+    },
+    {
+      "folder": "Daily Notes",
+      "template": "templates/Daily Notes.md"
+    },
+    {
+      "folder": "Personal Notes",
+      "template": "templates/Personal.md"
+    },
+    {
+      "folder": "Workout logs",
+      "template": "templates/Workout logs.md"
+    }
+  ],
+  "enable_file_templates": false,
+  "file_templates": [
+    {
+      "regex": ".*",
+      "template": ""
+    }
+  ],
+  "syntax_highlighting": true,
+  "syntax_highlighting_mobile": false,
+  "enabled_templates_hotkeys": [
+    "templates/School.md",
+    ""
+  ],
+  "startup_templates": [
+    ""
+  ]
+}

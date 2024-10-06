@@ -1,0 +1,174 @@
+{
+  "main": {
+    "id": "e0d08fcbfa8289ff",
+    "type": "split",
+    "children": [
+      {
+        "id": "e1b5562a141d71e8",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "880d25784b5b0bad",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Daily Notes/10-05-24.md",
+                "mode": "source",
+                "backlinks": false,
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "e0cc752bf5d68a50",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Workout logs/Workout log - 10-5-24.md",
+                "mode": "source",
+                "backlinks": false,
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "037dcc9f735836ae",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Workout logs/Workout log - 10-5-24.md",
+                "mode": "source",
+                "backlinks": false,
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "9423ff67b4c27cdb",
+    "type": "mobile-drawer",
+    "children": [
+      {
+        "id": "e696d5dabd1ee64c",
+        "type": "leaf",
+        "state": {
+          "type": "file-explorer",
+          "state": {
+            "sortOrder": "byModifiedTime"
+          }
+        }
+      },
+      {
+        "id": "60b83f56eceb7975",
+        "type": "leaf",
+        "state": {
+          "type": "search",
+          "state": {
+            "query": "tag:#Wikipedia",
+            "matchingCase": false,
+            "explainSearch": false,
+            "collapseAll": false,
+            "extraContext": false,
+            "sortOrder": "alphabetical"
+          }
+        }
+      },
+      {
+        "id": "eeaa7ce4aa78bc74",
+        "type": "leaf",
+        "state": {
+          "type": "tag",
+          "state": {
+            "sortOrder": "frequency",
+            "useHierarchy": true
+          }
+        }
+      },
+      {
+        "id": "170c39356a56f209",
+        "type": "leaf",
+        "state": {
+          "type": "bookmarks",
+          "state": {}
+        }
+      },
+      {
+        "id": "a9d611a3a74bb7cb",
+        "type": "leaf",
+        "state": {
+          "type": "all-properties",
+          "state": {
+            "sortOrder": "frequency",
+            "showSearch": false,
+            "searchQuery": ""
+          }
+        }
+      }
+    ],
+    "currentTab": 0
+  },
+  "right": {
+    "id": "2826e98dc23688fc",
+    "type": "mobile-drawer",
+    "children": [],
+    "currentTab": 0
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "markdown-importer:Open format converter": false,
+      "obsidian-read-it-later:ReadItLater: Save clipboard": false,
+      "etymology-lookup:Etymology Lookup": false,
+      "wikipedia-search:Open Article": false,
+      "audio-recorder:Start/stop recording": false,
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "templater-obsidian:Templater": false
+    }
+  },
+  "active": "880d25784b5b0bad",
+  "lastOpenFiles": [
+    "Workout logs/Workout log - 10-5-24.md",
+    "Daily Notes/10-05-24.md",
+    "ReadItLater/Article 10-04-24 22-33-18.md",
+    "Daily Notes/10-04-24.md",
+    "Images/IMG_1628.jpeg",
+    "ReadItLater/Youtube - Filthy Dog.md",
+    "Daily Notes/10-04-24 2.md",
+    "Wikipedia Imports/The Legend of Zelda~ Echoes of Wisdom.md",
+    "Daily Notes/10-03-24.md",
+    "Workout logs/Workout log - 10-3-24.md",
+    "Wikipedia Imports/Joost Klein.md",
+    "templates/Workout logs.md",
+    "Wikipedia Imports/Echidna.md",
+    "School Notes/Bio/Bio 10-2-24.md",
+    "Daily Notes/10-02-24.md",
+    "Workout logs",
+    "School Notes/Intern/Intern - 10-3-24.md",
+    "School Notes/Intern",
+    "School Notes/Homework.md",
+    "ReadItLater/Youtube - My headphones had a major problem until I built this.md",
+    "ReadItLater/Assets",
+    "ReadItLater",
+    "School Notes/Gov/Gov 10-3-24.md",
+    "Wikipedia Imports/Article Three of the United States Constitution.md",
+    "Wikipedia Imports/Federalist No. 78.md",
+    "Wikipedia Imports/Marbury v. Madison.md",
+    "School Notes/Gov/Gov - 10-1-24.md",
+    "School Notes/Gov/Gov - 9-25-24.md",
+    "School Notes/Gov/Gov - 9-23-24.md",
+    "School Notes/Gov/Gov - 9-27-24.md",
+    "School Notes/Myth/Myth - 9-30-24.md",
+    "Daily Notes"
+  ]
+}

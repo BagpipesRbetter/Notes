@@ -1,0 +1,9 @@
+{
+  "alwaysUpdateLinks": true,
+  "promptDelete": false,
+  "showInlineTitle": true,
+  "showRibbon": false,
+  "showUnsupportedFiles": true,
+  "attachmentFolderPath": "assets",
+  "newFileLocation": "current"
+}
