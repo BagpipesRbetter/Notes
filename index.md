@@ -15,7 +15,7 @@ Welcome to the My Notes! Below are resources and areas of my second brain you ca
 
 ---
 
-## School 🏫 
+## 🏫 School  
 
 
 
@@ -39,7 +39,7 @@ Welcome to the My Notes! Below are resources and areas of my second brain you ca
 
 ---
 
-## 🗿Personal Notes
+## 🗿 Personal Notes
 
 
 ---
