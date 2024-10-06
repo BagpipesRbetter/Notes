@@ -9,55 +9,11 @@ tags:
 
 ---
 
-# Table of Contents
-
-Welcome to the My Notes! Below are resources and areas of my second brain you can explore:
-
----
-
-## 🏫 School  
-
-
-
----
-
-
-## 🖼️ Images
-
-
-
----
-
-## 🖨️ Daily Notes
-
-
-
----
-
-## 📡 Wikipedia Imports
-
-
----
-
-## 🗿 Personal Notes
-
-
----
-
-## 💉 Workout Logs
-
-
----
-
-## 🪪 Misc
-
-
----
-
-## 💾 ReadItLater
-
-
----
-
-
-
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
