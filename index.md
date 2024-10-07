@@ -58,34 +58,40 @@ tags:
                 const response = await fetch(url);
                 const files = await response.json();
 
-                for (let file of files) {
-                    if (file.type === 'file' && file.name.endsWith('.md')) {
-                        // Add markdown file links
-                        const fileLink = document.createElement('a');
-                        fileLink.href = '#';
-                        fileLink.textContent = file.path; // Display full path for context
+                // Check if files is an array before iterating
+                if (Array.isArray(files)) {
+                    for (let file of files) {
+                        if (file.type === 'file' && file.name.endsWith('.md')) {
+                            // Add markdown file links
+                            const fileLink = document.createElement('a');
+                            fileLink.href = '#';
+                            fileLink.textContent = file.path; // Display full path for context
 
-                        fileLink.addEventListener('click', async (e) => {
-                            e.preventDefault();
-                            await fetchAndRenderMarkdown(file.path);
-                        });
+                            fileLink.addEventListener('click', async (e) => {
+                                e.preventDefault();
+                                await fetchAndRenderMarkdown(file.path);
+                            });
 
-                        fileListDiv.appendChild(fileLink);
-                        fileListDiv.appendChild(document.createElement('br'));
-                    } else if (file.type === 'dir') {
-                        // Recursively fetch files in subdirectories
-                        await fetchFiles(file.url);
+                            fileListDiv.appendChild(fileLink);
+                            fileListDiv.appendChild(document.createElement('br'));
+                        } else if (file.type === 'dir') {
+                            // Recursively fetch files in subdirectories
+                            await fetchFiles(file.url);
+                        }
                     }
+                } else {
+                    console.error('Error: Response is not an array:', files);
+                    fileListDiv.textContent = 'Error: Unexpected response from GitHub API.';
                 }
             } catch (error) {
                 console.error('Error:', error);
-                fileListDiv.textContent = 'Error loading files.';
+                fileListDiv.textContent = `Error loading files: ${error.message}`;
             }
         };
 
         // Fetch and display markdown content
         const fetchAndRenderMarkdown = async (filePath) => {
-            const rawUrl = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/master/${filePath}`;
+            const rawUrl = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/${filePath}`;
             try {
                 const response = await fetch(rawUrl);
                 const markdownText = await response.text();
@@ -104,6 +110,7 @@ tags:
             }
         };
 
+        // Call the function to fetch files from the root directory
         fetchFiles(apiUrl);
     </script>
 </body>
