@@ -47,7 +47,7 @@ tags:
     <script>
         const repoOwner = 'your-username';
         const repoName = 'your-repo';
-        const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/`;
+        const apiUrl = `https://api.github.com/repos/$BagpipesRbetter/$Notes/contents/`;
 
         const fileListDiv = document.getElementById('file-list');
         const markdownViewDiv = document.getElementById('markdown-view');
