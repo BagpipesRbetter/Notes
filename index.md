@@ -14,7 +14,7 @@ tags:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notes Browser</title>
+    <title>Dynamic Notes Browser</title>
     <style>
         body {
             background-color: #111;
@@ -41,77 +41,70 @@ tags:
 </head>
 <body>
     <h1>Notes</h1>
-    <div class="file-list" id="file-list"></div>
-    <div class="markdown-view" id="markdown-view"></div>
+    <div class="file-list" id="file-list">Loading files...</div>
+    <div class="markdown-view" id="markdown-view">Select a file to view its content.</div>
 
     <script>
-        const baseDir = './';
-        const files = [];
+        const repoOwner = 'your-username';
+        const repoName = 'your-repo';
+        const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/`;
 
-        // Function to fetch and render file list
-        const fetchFiles = async () => {
+        const fileListDiv = document.getElementById('file-list');
+        const markdownViewDiv = document.getElementById('markdown-view');
+
+        // Fetch directory content recursively
+        const fetchFiles = async (url) => {
             try {
-                const response = await fetch(baseDir);
-                const text = await response.text();
+                const response = await fetch(url);
+                const files = await response.json();
 
-                const regex = /href="(.*?\.md)"/g;
-                let match;
-                while ((match = regex.exec(text)) !== null) {
-                    files.push(match[1]);
+                for (let file of files) {
+                    if (file.type === 'file' && file.name.endsWith('.md')) {
+                        // Add markdown file links
+                        const fileLink = document.createElement('a');
+                        fileLink.href = '#';
+                        fileLink.textContent = file.path; // Display full path for context
+
+                        fileLink.addEventListener('click', async (e) => {
+                            e.preventDefault();
+                            await fetchAndRenderMarkdown(file.path);
+                        });
+
+                        fileListDiv.appendChild(fileLink);
+                        fileListDiv.appendChild(document.createElement('br'));
+                    } else if (file.type === 'dir') {
+                        // Recursively fetch files in subdirectories
+                        await fetchFiles(file.url);
+                    }
                 }
-
-                displayFiles();
             } catch (error) {
-                document.getElementById('file-list').textContent = 'Error loading files.';
+                console.error('Error:', error);
+                fileListDiv.textContent = 'Error loading files.';
             }
         };
 
-        // Function to display the file list
-        const displayFiles = () => {
-            const fileListDiv = document.getElementById('file-list');
-            if (files.length === 0) {
-                fileListDiv.textContent = 'No files found.';
-                return;
-            }
-
-            files.forEach(file => {
-                const fileName = file.split('/').pop();
-                const fileLink = document.createElement('a');
-                fileLink.href = '#';
-                fileLink.textContent = fileName;
-
-                // Add event listener to fetch and render the clicked file's content
-                fileLink.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    fetchAndRenderMarkdown(file);
-                });
-
-                fileListDiv.appendChild(fileLink);
-                fileListDiv.appendChild(document.createElement('br'));
-            });
-        };
-
-        // Function to fetch and render markdown file content
-        const fetchAndRenderMarkdown = async (file) => {
+        // Fetch and display markdown content
+        const fetchAndRenderMarkdown = async (filePath) => {
+            const rawUrl = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/master/${filePath}`;
             try {
-                const response = await fetch(file);
+                const response = await fetch(rawUrl);
                 const markdownText = await response.text();
-                
-                // Use basic markdown formatting for display
+
                 const htmlContent = markdownText
                     .replace(/# (.*?)(\n|$)/g, '<h1>$1</h1>')
                     .replace(/## (.*?)(\n|$)/g, '<h2>$1</h2>')
                     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                     .replace(/\*(.*?)\*/g, '<em>$1</em>')
-                    .replace(/\n/g, '<br>'); // simple line breaks
+                    .replace(/\n/g, '<br>');
 
-                document.getElementById('markdown-view').innerHTML = htmlContent;
+                markdownViewDiv.innerHTML = htmlContent;
             } catch (error) {
-                document.getElementById('markdown-view').textContent = 'Error loading file content.';
+                console.error('Error:', error);
+                markdownViewDiv.textContent = 'Error loading file content.';
             }
         };
 
-        fetchFiles();
+        fetchFiles(apiUrl);
     </script>
 </body>
 </html>
