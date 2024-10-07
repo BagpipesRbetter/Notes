@@ -1,6 +1,7 @@
 
 ---
 parent: "[[Wikipedia]]"
+title: <% tp.file.title() %>
 tags:
 	#Wikipedia
 	#

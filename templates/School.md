@@ -1,6 +1,7 @@
 
 ---
 parent: "[[School]]"
+title: <% tp.file.title() %>
 tags:
 	#School
 	#

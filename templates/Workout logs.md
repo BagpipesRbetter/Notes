@@ -1,6 +1,7 @@
 
 ---
 parent: "[[Workout logs]]"
+title: <% tp.file.title() %>
 tags:
 	#Personal
 	#Workout-logs 

@@ -1,6 +1,7 @@
 
 ---
 parent: "[[Daily Notes]]"
+title: <% tp.file.title() %>
 tags:
 	#Personal
 	#Daily-Notes 
