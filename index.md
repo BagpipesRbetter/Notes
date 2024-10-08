@@ -41,7 +41,7 @@ tags:
 </head>
 <body>
     <h1>Notes</h1>
-    <div class="file-list" id="file-list">Loading files...</div>
+    <div class="file-list" id="file-list"></div>
     <div class="markdown-view" id="markdown-view">Select a file to view its content.</div>
 
     <script>
