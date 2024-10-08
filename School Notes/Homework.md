@@ -1,2 +1,5 @@
--[] Math Homework
-	
+-[]finish all math homework before test
+-[]finish supreme court and foundation docs
+-[]do review for gov test
+-[]turn in frqs for bio
+-[]writing wednesday for gov

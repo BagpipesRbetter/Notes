@@ -21,7 +21,7 @@ Date: 2024-09-30T17:12
 	4 valence
 	forms single or double covalent
 	[[Hydrocarbon]]
-		Atoms Of hydrogen attcached to a carbon Become [[lipid]]s
+		Atoms Of hydrogen attcached to a [[Carbon]] Become [[lipid]]s
 	![](https://upload.wikimedia.org/wikipedia/commons/f/fb/Tetrahedral-3D-balls.png)
 	![](https://media.geeksforgeeks.org/wp-content/uploads/20231121220131/Structure-of-Carbon.png)
 [[Isomer]]s
