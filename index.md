@@ -15,13 +15,13 @@ tags:
     <title>Dynamic Notes Browser</title>
     <style>
         body {
-            background-color: #111;
-            color: #eee;
+            background-color: #000000;
+            color: #ffffff;
             font-family: monospace;
             padding: 20px;
         }
         a {
-            color: #0f0;
+            color: #ffffff;
             text-decoration: none;
         }
         a:hover {
@@ -31,16 +31,15 @@ tags:
             white-space: pre;
         }
         .markdown-view {
-            border-top: 1px solid #444;
+            border-top: 1px solid #ffffff;
             margin-top: 20px;
             padding-top: 20px;
         }
     </style>
 </head>
 <body>
-    <h1>Notes</h1>
     <div class="file-list" id="file-list"></div>
-    <div class="markdown-view" id="markdown-view">Select a file to view its content.</div>
+    <div class="markdown-view" id="markdown-view"></div>
 
     <script>
         const repoOwner = 'BagpipesRbetter';
