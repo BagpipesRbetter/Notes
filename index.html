@@ -50,38 +50,47 @@
         const repoOwner = 'BagpipesRbetter';
         const repoName = 'Notes';
         const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/`;
+        const commitsUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/commits?path=`;
 
         const fileListDiv = document.getElementById('file-list');
         const markdownViewDiv = document.getElementById('markdown-view');
 
         // Fetch directory content recursively
         const fetchFiles = async (url) => {
+            const files = [];
             try {
                 const response = await fetch(url);
-                const files = await response.json();
+                const data = await response.json();
 
-                for (let file of files) {
-                    if (file.type === 'file' && file.name.endsWith('.md')) {
-                        // Add markdown file links
-                        const fileLink = document.createElement('a');
-                        fileLink.href = '#';
-                        fileLink.textContent = file.path; // Display full path for context
-
-                        fileLink.addEventListener('click', async (e) => {
-                            e.preventDefault();
-                            await fetchAndRenderMarkdown(file.path);
+                for (let item of data) {
+                    if (item.type === 'file' && item.name.endsWith('.md')) {
+                        const commitDate = await fetchCreationDate(item.path);
+                        files.push({
+                            path: item.path,
+                            name: item.name,
+                            url: item.url,
+                            date: commitDate
                         });
-
-                        fileListDiv.appendChild(fileLink);
-                        fileListDiv.appendChild(document.createElement('br'));
-                    } else if (file.type === 'dir') {
-                        // Recursively fetch files in subdirectories
-                        await fetchFiles(file.url);
+                    } else if (item.type === 'dir') {
+                        const subFiles = await fetchFiles(item.url);
+                        files.push(...subFiles);  // Recursively add subfolder files
                     }
                 }
             } catch (error) {
                 console.error('Error:', error);
-                fileListDiv.textContent = 'Api error, normaly takes a ~15 mins to reset then you should be back to browsing my infinite knowlege :)'
+            }
+            return files;
+        };
+
+        // Fetch the creation date of a file using the commits API
+        const fetchCreationDate = async (filePath) => {
+            try {
+                const response = await fetch(`${commitsUrl}${filePath}`);
+                const commits = await response.json();
+                return commits[commits.length - 1]?.commit?.committer?.date || '';
+            } catch (error) {
+                console.error('Error fetching commit data:', error);
+                return '';
             }
         };
 
@@ -108,13 +117,38 @@
             }
         };
 
+        // Display sorted files in the DOM
+        const displayFiles = (files) => {
+            files.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+            files.forEach(file => {
+                const fileLink = document.createElement('a');
+                fileLink.href = '#';
+                fileLink.textContent = file.path; // Display full path for context
+
+                fileLink.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    await fetchAndRenderMarkdown(file.path);
+                });
+
+                fileListDiv.appendChild(fileLink);
+                fileListDiv.appendChild(document.createElement('br'));
+            });
+        };
+
+        // Load all files on page load
+        const loadFiles = async () => {
+            const files = await fetchFiles(apiUrl);
+            displayFiles(files);
+        };
+
         // Initially fetch and render README.md
         const loadReadme = async () => {
             await fetchAndRenderMarkdown('README.md');
         };
 
         loadReadme(); // Load README.md on page load
-        fetchFiles(apiUrl); // Load file list
+        loadFiles(); // Load file list
     </script>
 </body>
 </html>
