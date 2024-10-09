@@ -84,12 +84,13 @@
                 const markdownText = await response.text();
 
                 const htmlContent = markdownText
-                    .replace(/# (.*?)(\n|$)/g, '<h1>$1</h1>')
-                    .replace(/## (.*?)(\n|$)/g, '<h2>$1</h2>')
-                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                    .replace(/\*(.*?)\*/g, '<em>$1</em>')
-                    .replace(/\n/g, '<br>')
-                    .replace(/!\[(.*?)\]\((.*?)\)/g, '<img alt="$1" src="$2">'); // Convert image links to HTML <img> tags
+                    .replace(/# (.*?)(\n|$)/g, '<h1>$1</h1>')  // Headings
+                    .replace(/## (.*?)(\n|$)/g, '<h2>$1</h2>')  // Subheadings
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')  // Bold
+                    .replace(/\*(.*?)\*/g, '<em>$1</em>')  // Italics
+                    .replace(/\n/g, '<br>')  // Line breaks
+                    .replace(/!\[(.*?)\]\((.*?)\)/g, '<img alt="$1" src="$2">')  // Image links `![]()`
+                    .replace(/!\[\[(.*?)\]\]/g, '<img src="/images/$1">');  // Handle inline image `![[img_file_name]]`
 
                 markdownViewDiv.innerHTML = htmlContent;
             } catch (error) {
