@@ -90,7 +90,7 @@
                     .replace(/\*(.*?)\*/g, '<em>$1</em>')  // Italics
                     .replace(/\n/g, '<br>')  // Line breaks
                     .replace(/!\[(.*?)\]\((.*?)\)/g, '<img alt="$1" src="$2">')  // Image links `![]()`
-                    .replace(/!\[\[(.*?)\]\]/g, '<img src="/images/$1">');  // Handle inline image `![[img_file_name]]`
+                    .replace(/!\[\[(.*?)\]\]/g, '<img src="/Images/$1">');  // Handle inline image `![[img_file_name]]`
 
                 markdownViewDiv.innerHTML = htmlContent;
             } catch (error) {
