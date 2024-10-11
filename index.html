@@ -32,15 +32,17 @@
             max-width: 100%;
             height: auto;
         }
-        
+        .last-updated {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #888888;
+        }
     </style>
 </head>
 <body>
     <div class="markdown-view" id="markdown-view"></div>
-    
-    <hr>
     <div class="file-list" id="file-list"></div>
-    
+    <div class="last-updated" id="last-updated"></div>
     
     <script>
         const repoOwner = 'BagpipesRbetter';
@@ -49,6 +51,22 @@
 
         const fileListDiv = document.getElementById('file-list');
         const markdownViewDiv = document.getElementById('markdown-view');
+        const lastUpdatedDiv = document.getElementById('last-updated');
+
+        // Fetch repository information for last push date
+        const fetchLastUpdatedDate = async () => {
+            const repoInfoUrl = `https://api.github.com/repos/${repoOwner}/${repoName}`;
+            try {
+                const response = await fetch(repoInfoUrl);
+                const repoData = await response.json();
+                const lastPushDate = new Date(repoData.pushed_at).toLocaleString();  // Format date
+
+                lastUpdatedDiv.textContent = `Last updated: ${lastPushDate}`;
+            } catch (error) {
+                console.error('Error fetching last updated date:', error);
+                lastUpdatedDiv.textContent = 'Error fetching last updated date.';
+            }
+        };
 
         // Fetch directory content recursively
         const fetchFiles = async (url) => {
@@ -77,7 +95,7 @@
                 }
             } catch (error) {
                 console.error('Error:', error);
-                fileListDiv.textContent = 'Api error, normaly takes a ~15 mins to reset then you should be back to browsing my infinite knowlege :)'
+                fileListDiv.textContent = 'Api error, normally takes ~15 mins to reset then you should be back to browsing my infinite knowledge :)';
             }
         };
 
@@ -109,8 +127,10 @@
             await fetchAndRenderMarkdown('README.md');
         };
 
+        // Run on page load
         loadReadme(); // Load README.md on page load
         fetchFiles(apiUrl); // Load file list
+        fetchLastUpdatedDate(); // Get last push date
     </script>
 </body>
 </html>
