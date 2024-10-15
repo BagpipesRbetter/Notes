@@ -24,7 +24,6 @@
             white-space: pre;
             margin-top: 20px;
         }
-        /* Markdown block styling */
         #markdown-view {
             background-color: #1e1e1e;
             color: #dcdcdc;
@@ -32,21 +31,17 @@
             border-radius: 5px;
             line-height: 1.6;
         }
-        /* Bold */
         strong {
-            color: #ffcd22;
+            color: #ffcd22; /* Bold color */
         }
-        /* Italics */
         em {
-            color: #8888ff;
+            color: #8888ff; /* Italics color */
             font-style: italic;
         }
-        /* Strikethrough */
         del {
-            color: #ff8888;
+            color: #ff8888; /* Strikethrough color */
             text-decoration: line-through;
         }
-        /* Indentation with lines */
         .indent {
             border-left: 1px solid #888888;
             padding-left: 10px;
@@ -70,7 +65,7 @@
 
     <!-- Include Marked.js for Markdown rendering -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
+    
     <script>
         const repoOwner = 'BagpipesRbetter';
         const repoName = 'Notes';
@@ -126,19 +121,26 @@
 
         // Fetch and display markdown content using Marked.js
         const fetchAndRenderMarkdown = async (filePath) => {
-            const rawUrl = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/master/${filePath}`;
+            const rawUrl = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/${filePath}`; // Ensure 'main' matches your default branch
+            console.log('Fetching Markdown from:', rawUrl); // Log the raw URL for debugging
+
             try {
                 const response = await fetch(rawUrl);
+                if (!response.ok) {
+                    throw new Error(`Network response was not ok: ${response.statusText}`);
+                }
+
                 const markdownText = await response.text();
-
                 // Convert Markdown to HTML using Marked.js
-                const htmlContent = marked(markdownText);
+                const htmlContent = marked.parse(markdownText);
+                // Create a header for the file name
+                const fileNameHeader = `<h1>${filePath}</h1>`;
+                // Insert the file name header and the parsed HTML into the markdown view
+                markdownViewDiv.innerHTML = fileNameHeader + htmlContent;
 
-                // Insert the parsed HTML into the markdown view
-                markdownViewDiv.innerHTML = htmlContent;
             } catch (error) {
-                console.error('Error:', error);
-                markdownViewDiv.textContent = 'Error loading file content.';
+                console.error('Error fetching or rendering Markdown:', error);
+                markdownViewDiv.textContent = 'Error loading file content. Check the console for details.';
             }
         };
 
