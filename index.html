@@ -20,9 +20,21 @@
         a:hover {
             text-decoration: underline;
         }
-        .file-list {
-            white-space: pre;
+        #file-list {
             margin-top: 20px;
+        }
+        .file-list ul {
+            list-style-type: none; /* Remove default bullets */
+            padding-left: 20px; /* Indentation for sub-items */
+        }
+        .file-list li {
+            cursor: pointer; /* Change cursor on hover */
+            padding: 5px 0; /* Spacing between items */
+            transition: background-color 0.3s; /* Smooth background color transition */
+            border-radius: 5px; /* Rounded corners */
+        }
+        .file-list li:hover {
+            background-color: #333; /* Highlight on hover */
         }
         #markdown-view {
             background-color: #1e1e1e;
@@ -30,7 +42,7 @@
             padding: 15px;
             border-radius: 5px;
             line-height: 1.6;
-            white-space: pre-wrap; /* Preserve whitespace and line breaks */
+            white-space: pre-wrap;
         }
         strong {
             color: #ffcd22; /* Bold color */
@@ -43,11 +55,6 @@
             color: #ff8888; /* Strikethrough color */
             text-decoration: line-through;
         }
-        .indent {
-            border-left: 1px solid #888888;
-            padding-left: 10px;
-            margin-left: 20px;
-        }
         .last-updated {
             margin-top: 20px;
             font-size: 0.9em;
@@ -57,16 +64,27 @@
             max-width: 80%;
             height: auto;
         }
+        /* Styling for tree view */
+        .expandable {
+            cursor: pointer; /* Change cursor on hover */
+        }
+        .collapsed::after {
+            content: ' ▶'; /* Arrow for collapsed items */
+        }
+        .expanded::after {
+            content: ' ▼'; /* Arrow for expanded items */
+        }
+        .hidden {
+            display: none; /* Hide elements */
+        }
     </style>
 </head>
 <body>
+    <h1>Evan's Notes</h1>
     <div id="markdown-view"></div>
     <div class="file-list" id="file-list"></div>
     <div class="last-updated" id="last-updated"></div>
 
-    <!-- Include Marked.js for Markdown rendering -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    
     <script>
         const repoOwner = 'BagpipesRbetter';
         const repoName = 'Notes';
@@ -83,7 +101,6 @@
                 const response = await fetch(repoInfoUrl);
                 const repoData = await response.json();
                 const lastPushDate = new Date(repoData.pushed_at).toLocaleString();
-
                 lastUpdatedDiv.textContent = `Last updated: ${lastPushDate}`;
             } catch (error) {
                 console.error('Error fetching last updated date:', error);
@@ -96,39 +113,58 @@
             try {
                 const response = await fetch(url);
                 const files = await response.json();
+                const list = document.createElement('ul');
 
                 for (let file of files) {
-                    if (file.type === 'file' && file.name.endsWith('.md')) {
-                        const fileLink = document.createElement('a');
-                        fileLink.href = '#';
-                        fileLink.textContent = file.path;
+                    const listItem = document.createElement('li');
 
-                        fileLink.addEventListener('click', async (e) => {
-                            e.preventDefault();
+                    if (file.type === 'file' && file.name.endsWith('.md')) {
+                        listItem.textContent = file.path;
+
+                        listItem.addEventListener('click', async (e) => {
+                            e.stopPropagation(); // Prevent parent click
                             await fetchAndRenderMarkdown(file.path);
                         });
-
-                        fileListDiv.appendChild(fileLink);
-                        fileListDiv.appendChild(document.createElement('br'));
                     } else if (file.type === 'dir') {
-                        await fetchFiles(file.url);
+                        listItem.textContent = file.name;
+                        listItem.classList.add('expandable', 'collapsed'); // Add expandable class
+                        const subList = document.createElement('ul');
+                        subList.classList.add('hidden'); // Start hidden
+                        listItem.appendChild(subList); // Append an empty sublist
+
+                        listItem.addEventListener('click', async (e) => {
+                            e.stopPropagation(); // Prevent parent click
+                            listItem.classList.toggle('expanded'); // Toggle expanded state
+                            listItem.classList.toggle('collapsed');
+
+                            if (subList.childElementCount === 0) { // If sublist is empty
+                                const filesInDir = await fetchFiles(file.url);
+                                subList.appendChild(filesInDir); // Append directory contents
+                            }
+
+                            subList.classList.toggle('hidden'); // Toggle visibility of the sublist
+                        });
                     }
+
+                    list.appendChild(listItem);
                 }
+
+                return list;
             } catch (error) {
                 console.error('Error:', error);
                 fileListDiv.textContent = 'API error. Please wait ~15 minutes for reset.';
             }
         };
 
-        // Replace tab characters with non-breaking spaces
+        // Format markdown text to replace tabs
         const formatMarkdownText = (text) => {
-            return text.replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;'); // Adjust number of &nbsp; for desired indentation
+            return text.replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;');
         };
 
         // Fetch and display markdown content using Marked.js
         const fetchAndRenderMarkdown = async (filePath) => {
-            const rawUrl = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/${filePath}`; // Ensure 'main' matches your default branch
-            console.log('Fetching Markdown from:', rawUrl); // Log the raw URL for debugging
+            const rawUrl = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/${filePath}`;
+            console.log('Fetching Markdown from:', rawUrl);
 
             try {
                 const response = await fetch(rawUrl);
@@ -137,13 +173,9 @@
                 }
 
                 const markdownText = await response.text();
-                // Format markdown text to replace tabs
                 const formattedText = formatMarkdownText(markdownText);
-                // Convert Markdown to HTML using Marked.js
                 const htmlContent = marked.parse(formattedText);
-                // Create a header for the file name
                 const fileNameHeader = `<h1>${filePath}</h1>`;
-                // Insert the file name header and the parsed HTML into the markdown view
                 markdownViewDiv.innerHTML = fileNameHeader + htmlContent;
 
             } catch (error) {
@@ -158,9 +190,9 @@
         };
 
         // Run on page load
-        loadReadme(); // Load README.md on page load
-        fetchFiles(apiUrl); // Load file list
-        fetchLastUpdatedDate(); // Get last push date
+        loadReadme();
+        fetchFiles(apiUrl).then(list => fileListDiv.appendChild(list));
+        fetchLastUpdatedDate();
     </script>
 </body>
 </html>
