@@ -71,6 +71,7 @@
             max-width: 85%;
             height: auto;
         }
+
     </style>
 </head>
 <body>
@@ -131,6 +132,7 @@
                 if (data.node.children.length === 0) { // Only if it's a file
                     await fetchAndRenderMarkdown(data.node.id);
                 }
+                
             });
         };
 
