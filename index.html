@@ -30,6 +30,7 @@
             padding: 15px;
             border-radius: 5px;
             line-height: 1.6;
+            white-space: pre-wrap; /* Preserve whitespace and line breaks */
         }
         strong {
             color: #ffcd22; /* Bold color */
@@ -119,6 +120,11 @@
             }
         };
 
+        // Replace tab characters with non-breaking spaces
+        const formatMarkdownText = (text) => {
+            return text.replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;'); // Adjust number of &nbsp; for desired indentation
+        };
+
         // Fetch and display markdown content using Marked.js
         const fetchAndRenderMarkdown = async (filePath) => {
             const rawUrl = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/${filePath}`; // Ensure 'main' matches your default branch
@@ -131,8 +137,10 @@
                 }
 
                 const markdownText = await response.text();
+                // Format markdown text to replace tabs
+                const formattedText = formatMarkdownText(markdownText);
                 // Convert Markdown to HTML using Marked.js
-                const htmlContent = marked.parse(markdownText);
+                const htmlContent = marked.parse(formattedText);
                 // Create a header for the file name
                 const fileNameHeader = `<h1>${filePath}</h1>`;
                 // Insert the file name header and the parsed HTML into the markdown view
