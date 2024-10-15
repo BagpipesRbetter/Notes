@@ -33,24 +33,29 @@
         }
         /* Customize jsTree styles */
         .jstree-default .jstree-anchor {
-            color: #ffffff; /* Anchor text color */
-            text-decoration: none; /* Remove underline */
-            padding: 5px 10px; /* Padding for tree items */
-            border-radius: 4px; /* Rounded corners */
-            transition: background-color 0.3s; /* Smooth background transition */
+            color: #ffffff !important; /* Anchor text color */
+            text-decoration: none !important; /* Remove underline */
+            padding: 5px 10px !important; /* Padding for tree items */
+            border-radius: 4px !important; /* Rounded corners */
+            transition: background-color 0.3s !important; /* Smooth background transition */
         }
         .jstree-default .jstree-anchor:hover {
-            background-color: #444; /* Background on hover */
-            color: #ffffff; /* Text color on hover */
+            background-color: #444 !important; /* Background on hover */
+            color: #ffffff !important; /* Text color on hover */
         }
         .jstree-default .jstree-icon {
-            margin-right: 5px; /* Spacing for icons */
+            margin-right: 5px !important; /* Spacing for icons */
         }
         .last-updated {
             margin-top: 20px;
             font-size: 0.9em;
             color: #888888;
         }
+        li.jstree-open > a .jstree-icon {background:url("images/foldero.svg") 0px 0px no-repeat !important;}
+        li.jstree-closed > a .jstree-icon {background:url("images/folderc.svg") 0px 0px no-repeat !important;}
+        li.jstree-leaf > a .jstree-icon {background:url("images/file.svg") 0px 0px no-repeat !important;}
+        li.jstree-leaf > a .jstree-icon.jstree-image {background:url("images/image.svg") 0px 0px no-repeat !important;}
+
         strong {
             color: #ffcd22; /* Bold color */
         }
@@ -71,7 +76,7 @@
             max-width: 85%;
             height: auto;
         }
-
+        
     </style>
 </head>
 <body>
@@ -111,6 +116,8 @@
             for (let file of files) {
                 if (file.type === 'file' && file.name.endsWith('.md')) {
                     treeData.push({ text: file.name, id: file.path, icon: "jstree-file" });
+                } else if (file.type === 'file' && /\.(jpg|jpeg|png|gif|svg)$/i.test(file.name)) {
+                    treeData.push({ text: file.name, id: file.path, icon: "jstree-image" });
                 } else if (file.type === 'dir') {
                     treeData.push({ text: file.name, id: file.path, children: await buildTreeData(file.url), icon: "jstree-folder" });
                 }
