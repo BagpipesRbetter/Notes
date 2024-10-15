@@ -1,3 +1,3 @@
 # Notes! :)
-This Is where I host all of my notes for class and [[Personal]], if i gave you this link its very easy to go and find what you need, just click the links below :)
+This Is where I host all of my notes for class and [[Personal]], if i gave you this link its very easy to go and find what you need, its organixed by area of my life, then subject, then individual notes on things weather that be some my workout log for that day or notes on the [[Titanomachy]] is up to you. note that this web interface isnt prefect at displaying some stuff [[this is a example]] words with double brackes around it is a internal link to another note. images should render properly and external links should work to navigate you out. :)
 ![](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExemdkNXg1anJ1dWo3ZWUzbnNlN21lZmUwbmE0a2RuY3F3cDNqcXdraSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/rrasLFSTyi4Th1e8Xo/giphy.webp) 
