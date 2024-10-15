@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=0.9">
     <link rel="icon" type="image/svg+xml" sizes="21x21" href="images/favicon.svg">
     <title>Evan's Notes :)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/themes/default/style.min.css" />
     <style>
         body {
             background-color: #000000;
@@ -13,31 +14,6 @@
             padding: 20px;
             width: 90%;
         }
-        a {
-            color: #ffffff;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        #file-list {
-            margin-top: 20px;
-            padding: 15px;
-        }
-        .file-list ul {
-            list-style-type: none; /* Remove default bullets */
-            padding-left: 20px; /* Indentation for sub-items */
-        }
-        .file-list li {
-            cursor: pointer; /* Change cursor on hover */
-            padding: 5px 0; /* Spacing between items */
-            transition: background-color 0.3s; /* Smooth background color transition */
-            border-radius: 5px; /* Rounded corners */
-        }
-        .file-list li:hover {
-            background-color: #333; /* Highlight on hover */
-            
-        }
         #markdown-view {
             background-color: #1e1e1e;
             color: #dcdcdc;
@@ -45,6 +21,35 @@
             border-radius: 5px;
             line-height: 1.6;
             white-space: pre-wrap;
+            margin-bottom: 20px; /* Spacing between markdown and tree */
+        }
+        #file-tree {
+            margin-top: 20px;
+            border-radius: 5px; /* Rounded corners */
+            overflow: hidden; /* Prevent overflow */
+            background-color: #1e1e1e; /* Background color for the tree */
+            padding: 10px; /* Inner padding */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
+        }
+        /* Customize jsTree styles */
+        .jstree-default .jstree-anchor {
+            color: #ffffff; /* Anchor text color */
+            text-decoration: none; /* Remove underline */
+            padding: 5px 10px; /* Padding for tree items */
+            border-radius: 4px; /* Rounded corners */
+            transition: background-color 0.3s; /* Smooth background transition */
+        }
+        .jstree-default .jstree-anchor:hover {
+            background-color: #444; /* Background on hover */
+            color: #ffffff; /* Text color on hover */
+        }
+        .jstree-default .jstree-icon {
+            margin-right: 5px; /* Spacing for icons */
+        }
+        .last-updated {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #888888;
         }
         strong {
             color: #ffcd22; /* Bold color */
@@ -63,40 +68,27 @@
             color: #888888;
         }
         img {
-            max-width: 80%;
+            max-width: 85%;
             height: auto;
-        }
-        /* Styling for tree view */
-        .expandable {
-            cursor: pointer; /* Change cursor on hover */
-        }
-        .collapsed::after {
-            content: ' ▶'; /* Arrow for collapsed items */
-        }
-        .expanded::after {
-            content: ' ▼'; /* Arrow for expanded items */
-        }
-        .hidden {
-            display: none; /* Hide elements */
         }
     </style>
 </head>
 <body>
     <h1>Evan's Notes</h1>
     <div id="markdown-view"></div>
-    <div class="file-list" id="file-list"></div>
+    <div id="file-tree"></div>
     <div class="last-updated" id="last-updated"></div>
-
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/jstree.min.js"></script>
     <script>
         const repoOwner = 'BagpipesRbetter';
         const repoName = 'Notes';
         const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/`;
 
-        const fileListDiv = document.getElementById('file-list');
-        const markdownViewDiv = document.getElementById('markdown-view');
         const lastUpdatedDiv = document.getElementById('last-updated');
+        const markdownViewDiv = document.getElementById('markdown-view');
 
-        // Fetch repository information for last push date
         const fetchLastUpdatedDate = async () => {
             const repoInfoUrl = `https://api.github.com/repos/${repoOwner}/${repoName}`;
             try {
@@ -110,60 +102,38 @@
             }
         };
 
-        // Fetch directory content recursively
-        const fetchFiles = async (url) => {
-            try {
-                const response = await fetch(url);
-                const files = await response.json();
-                const list = document.createElement('ul');
+        const buildTreeData = async (url) => {
+            const response = await fetch(url);
+            const files = await response.json();
+            const treeData = [];
 
-                for (let file of files) {
-                    const listItem = document.createElement('li');
-
-                    if (file.type === 'file' && file.name.endsWith('.md')) {
-                        listItem.textContent = file.path;
-
-                        listItem.addEventListener('click', async (e) => {
-                            e.stopPropagation(); // Prevent parent click
-                            await fetchAndRenderMarkdown(file.path);
-                        });
-                    } else if (file.type === 'dir') {
-                        listItem.textContent = file.name;
-                        listItem.classList.add('expandable', 'collapsed'); // Add expandable class
-                        const subList = document.createElement('ul');
-                        subList.classList.add('hidden'); // Start hidden
-                        listItem.appendChild(subList); // Append an empty sublist
-
-                        listItem.addEventListener('click', async (e) => {
-                            e.stopPropagation(); // Prevent parent click
-                            listItem.classList.toggle('expanded'); // Toggle expanded state
-                            listItem.classList.toggle('collapsed');
-
-                            if (subList.childElementCount === 0) { // If sublist is empty
-                                const filesInDir = await fetchFiles(file.url);
-                                subList.appendChild(filesInDir); // Append directory contents
-                            }
-
-                            subList.classList.toggle('hidden'); // Toggle visibility of the sublist
-                        });
-                    }
-
-                    list.appendChild(listItem);
+            for (let file of files) {
+                if (file.type === 'file' && file.name.endsWith('.md')) {
+                    treeData.push({ text: file.name, id: file.path, icon: "jstree-file" });
+                } else if (file.type === 'dir') {
+                    treeData.push({ text: file.name, id: file.path, children: await buildTreeData(file.url), icon: "jstree-folder" });
                 }
-
-                return list;
-            } catch (error) {
-                console.error('Error:', error);
-                fileListDiv.textContent = 'API error. Please wait ~15 minutes for reset.';
             }
+
+            return treeData;
         };
 
-        // Format markdown text to replace tabs
-        const formatMarkdownText = (text) => {
-            return text.replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;');
+        const renderTree = async () => {
+            const treeData = await buildTreeData(apiUrl);
+            $('#file-tree').jstree({
+                'core': {
+                    'data': treeData
+                }
+            });
+
+            // Event listener for when a file is clicked
+            $('#file-tree').on('select_node.jstree', async (e, data) => {
+                if (data.node.children.length === 0) { // Only if it's a file
+                    await fetchAndRenderMarkdown(data.node.id);
+                }
+            });
         };
 
-        // Fetch and display markdown content using Marked.js
         const fetchAndRenderMarkdown = async (filePath) => {
             const rawUrl = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/${filePath}`;
             console.log('Fetching Markdown from:', rawUrl);
@@ -175,25 +145,21 @@
                 }
 
                 const markdownText = await response.text();
-                const formattedText = formatMarkdownText(markdownText);
-                const htmlContent = marked.parse(formattedText);
-                const fileNameHeader = `<h1>${filePath}</h1>`;
-                markdownViewDiv.innerHTML = fileNameHeader + htmlContent;
+                markdownViewDiv.innerHTML = marked.parse(markdownText);
 
             } catch (error) {
                 console.error('Error fetching or rendering Markdown:', error);
                 markdownViewDiv.textContent = 'Error loading file content. Check the console for details.';
             }
+            window.scrollTo(0, 0);
         };
-
-        // Initially fetch and render README.md
+        // Load the README.md initially
         const loadReadme = async () => {
             await fetchAndRenderMarkdown('README.md');
         };
-
-        // Run on page load
+        // Initial setup
+        renderTree();
         loadReadme();
-        fetchFiles(apiUrl).then(list => fileListDiv.appendChild(list));
         fetchLastUpdatedDate();
     </script>
 </body>
