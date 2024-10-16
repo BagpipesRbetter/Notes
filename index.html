@@ -155,22 +155,17 @@
 
         var markdownText = await response.text();
 
-        // Extract the folder path from the Markdown file
-        const fileDirectory = filePath.substring(0, filePath.lastIndexOf('/') + 1);
-
         // Replace ![[image.jpg]] with the full URL, maintaining the file's relative path for images
         markdownText = markdownText.replace(/!\[\[(.*?)\]\]/g, (match, p1) => {
-            const imageUrl = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/${fileDirectory}${p1.trim()}`;
+            const imageUrl = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/${filePath.substring(0, filePath.lastIndexOf('/') + 1)}${p1.trim()}`;
             return `![${p1}](${imageUrl})`;
         });
 
-        // Replace [[Internal Link]] with an actual anchor tag pointing to the .md file
+        // Replace [[Internal Link]] with an actual anchor tag
         markdownText = markdownText.replace(/\[\[(.*?)\]\]/g, (match, p1) => {
-            const linkUrl = `#${fileDirectory}${p1.trim()}.md`; // Point to the internal Markdown file
-            return `<a href="${linkUrl}">${p1.trim()}</a>`;
+            return `<a href="#" data-link="${p1.trim()}">${p1.trim()}</a>`;
         });
 
-        // Render the Markdown content
         markdownViewDiv.innerHTML = marked.parse(markdownText);
 
     } catch (error) {
@@ -179,6 +174,39 @@
     }
     window.scrollTo(0, 0);
 };
+
+// Function to search for a file matching the internal link
+const findMarkdownFile = async (linkName) => {
+    const response = await fetch(apiUrl);
+    const files = await response.json();
+
+    for (let file of files) {
+        if (file.type === 'file' && file.name === `${linkName}.md`) {
+            return file.path; // Return the file path if a match is found
+        }
+    }
+
+    return null; // Return null if no file is found
+};
+
+// Event listener for handling internal links
+document.addEventListener('click', async (e) => {
+    const target = e.target;
+    if (target.tagName.toLowerCase() === 'a' && target.hasAttribute('data-link')) {
+        e.preventDefault();
+        const linkName = target.getAttribute('data-link');
+        
+        const filePath = await findMarkdownFile(linkName); // Search for the file
+
+        if (filePath) {
+            await fetchAndRenderMarkdown(filePath); // Load and render the file if found
+        } else {
+            console.error(`File not found for link: ${linkName}`);
+            markdownViewDiv.textContent = `Error: No file found for "${linkName}"`;
+        }
+    }
+});
+
 
 // Add functionality for link navigation
 document.addEventListener('click', (e) => {
