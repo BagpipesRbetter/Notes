@@ -144,27 +144,53 @@
         };
 
         const fetchAndRenderMarkdown = async (filePath) => {
-            const rawUrl = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/${filePath}`;
-            console.log('Fetching Markdown from:', rawUrl);
+    const rawUrl = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/${filePath}`;
+    console.log('Fetching Markdown from:', rawUrl);
 
-            try {
-                const response = await fetch(rawUrl);
-                if (!response.ok) {
-                    throw new Error(`Network response was not ok: ${response.statusText}`);
-                }
-                markdownText = markdownText.replace(/!\[\[(.*?)\]\]/g, (match, p1) => {
-            const imageUrl = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/${p1}`;
+    try {
+        const response = await fetch(rawUrl);
+        if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
+
+        var markdownText = await response.text();
+
+        // Extract the folder path from the Markdown file
+        const fileDirectory = filePath.substring(0, filePath.lastIndexOf('/') + 1);
+
+        // Replace ![[image.jpg]] with the full URL, maintaining the file's relative path for images
+        markdownText = markdownText.replace(/!\[\[(.*?)\]\]/g, (match, p1) => {
+            const imageUrl = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/${fileDirectory}${p1.trim()}`;
             return `![${p1}](${imageUrl})`;
         });
-                const markdownText = await response.text();
-                markdownViewDiv.innerHTML = marked.parse(markdownText);
 
-            } catch (error) {
-                console.error('Error fetching or rendering Markdown:', error);
-                markdownViewDiv.textContent = 'Error loading file content. Check the console for details.';
-            }
-            window.scrollTo(0, 0);
-        };
+        // Replace [[Internal Link]] with an actual anchor tag pointing to the .md file
+        markdownText = markdownText.replace(/\[\[(.*?)\]\]/g, (match, p1) => {
+            const linkUrl = `#${fileDirectory}${p1.trim()}.md`; // Point to the internal Markdown file
+            return `<a href="${linkUrl}">${p1.trim()}</a>`;
+        });
+
+        // Render the Markdown content
+        markdownViewDiv.innerHTML = marked.parse(markdownText);
+
+    } catch (error) {
+        console.error('Error fetching or rendering Markdown:', error);
+        markdownViewDiv.textContent = 'Error loading file content. Check the console for details.';
+    }
+    window.scrollTo(0, 0);
+};
+
+// Add functionality for link navigation
+document.addEventListener('click', (e) => {
+    const target = e.target;
+    if (target.tagName.toLowerCase() === 'a' && target.href.startsWith('#')) {
+        e.preventDefault();
+        const filePath = target.getAttribute('href').substring(1); // Remove the leading '#'
+        fetchAndRenderMarkdown(filePath); // Load the linked file
+    }
+});
+
+
         // Load the README.md initially
         const loadReadme = async () => {
             await fetchAndRenderMarkdown('README.md');
