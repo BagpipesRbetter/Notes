@@ -51,10 +51,10 @@
             font-size: 0.9em;
             color: #888888;
         }
-        li.jstree-open > a .jstree-icon {background:url("images/foldero.svg") 0px 0px no-repeat !important;}
-        li.jstree-closed > a .jstree-icon {background:url("images/folderc.svg") 0px 0px no-repeat !important;}
-        li.jstree-leaf > a .jstree-icon {background:url("images/file.svg") 0px 0px no-repeat !important;}
-        li.jstree-leaf > a .jstree-icon.jstree-image {background:url("images/image.svg") 0px 0px no-repeat !important;}
+        li.jstree-open > a .jstree-icon {background:url("Images/foldero.svg") 0px 0px no-repeat !important;}
+        li.jstree-closed > a .jstree-icon {background:url("Images/folderc.svg") 0px 0px no-repeat !important;}
+        li.jstree-leaf > a .jstree-icon {background:url("Images/file.svg") 0px 0px no-repeat !important;}
+        li.jstree-leaf > a .jstree-icon.jstree-image {background:url("Images/image.svg") 0px 0px no-repeat !important;}
 
         strong {
             color: #ffcd22; /* Bold color */
@@ -152,7 +152,10 @@
                 if (!response.ok) {
                     throw new Error(`Network response was not ok: ${response.statusText}`);
                 }
-
+                markdownText = markdownText.replace(/!\[\[(.*?)\]\]/g, (match, p1) => {
+            const imageUrl = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/${p1}`;
+            return `![${p1}](${imageUrl})`;
+        });
                 const markdownText = await response.text();
                 markdownViewDiv.innerHTML = marked.parse(markdownText);
 
