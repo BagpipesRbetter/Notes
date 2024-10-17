@@ -34,6 +34,7 @@ const buildTreeData = async (url) => {
     ) {
       treeData.push({ title: file.name, path: file.path, icon: "image" });
     } else if (file.type === "dir") {
+      // Recursively build the child nodes for directories
       treeData.push({
         title: file.name,
         folder: true,
@@ -45,12 +46,30 @@ const buildTreeData = async (url) => {
   return treeData;
 };
 
+
 const renderTree = async () => {
   const treeData = await buildTreeData(apiUrl);
 
-  // Initialize FancyTree
+  // Initialize FancyTree with autoExpand and expanded options
   $("#file-tree").fancytree({
     source: treeData,
+    autoExpand: true,  // Automatically expand all folders
+    extensions: ["glyph"],
+    glyph: {
+      map: {
+        // Custom icons for folder, open folder, and file
+        folder: "custom-folder",
+        folderOpen: "custom-folder-open",
+        doc: "custom-file",
+        image: "custom-image",
+      },
+    },
+    // Apply expanded: true to each node
+    init: function(event, data) {
+      data.tree.visit(function(node){
+        node.setExpanded(true);
+      });
+    },
     click: async function (event, data) {
       if (!data.node.folder) {
         await fetchAndRenderMarkdown(data.node.data.path);
@@ -58,6 +77,7 @@ const renderTree = async () => {
     },
   });
 };
+
 
 // Fetch and render the selected Markdown file
 const fetchAndRenderMarkdown = async (filePath) => {
@@ -83,7 +103,7 @@ const fetchAndRenderMarkdown = async (filePath) => {
 
 // Load the README.md file initially
 const loadReadme = async () => {
-  await fetchAndRenderMarkdown("Docs/README.md");
+  await fetchAndRenderMarkdown("Notes/Docs/README.md");
 };
 
 // Initial setup

@@ -89,4 +89,23 @@ body {
     max-width: 85%;
     height: auto;
   }
+/* Custom folder icons */
+span.fancytree-custom-folder .fancytree-icon {
+    background: url("/Notes/Images/folderc.svg") no-repeat center center !important;
+  }
   
+  /* Custom open folder icons */
+  span.fancytree-custom-folder-open .fancytree-icon {
+    background: url("/Notes/Images/foldero.svg") no-repeat center center !important;
+  }
+  
+  /* Custom file icons */
+  span.fancytree-custom-file .fancytree-icon {
+    background: url("/Notes/Images/file.svg") no-repeat center center !important;
+  }
+  
+  /* Custom image icons */
+  span.fancytree-custom-image .fancytree-icon {
+    background: url("/Notes/Images/image.svg") no-repeat center center !important;
+  }
+    
