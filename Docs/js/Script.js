@@ -80,31 +80,40 @@ const renderTree = async () => {
 
 
 // Fetch and render the selected Markdown file
-const fetchAndRenderMarkdown = async (filePath) => {
-  const rawUrl = `https://BagpipesRbetter.github.io/Notes/${filePath}`;
-  console.log("Fetching Markdown from:", rawUrl);
-
+// Fetch README.md
+async function fetchAndRenderMarkdown(url) {
   try {
-    const response = await fetch(rawUrl);
-    if (!response.ok) {
-      throw new Error(`Network response was not ok: ${response.statusText}`);
-    }
-
-    const markdownText = await response.text();
-    markdownViewDiv.innerHTML = marked.parse(markdownText);
+      const response = await fetch(url);
+      if (!response.ok) {
+          throw new Error("Network response was not ok");
+      }
+      const markdown = await response.text();
+      document.getElementById('markdown-view').textContent = markdown;
   } catch (error) {
-    console.error("Error fetching or rendering Markdown:", error);
-    markdownViewDiv.textContent =
-      "Error loading file content. Check the console for details.";
+      console.error("Error fetching or rendering Markdown:", error);
   }
+}
 
-  window.scrollTo(0, 0);
-};
+// Load README.md from the correct location
+function loadReadme() {
+  const readmeUrl = 'https://bagpipesrbetter.github.io/Notes/Docs/README.md'; // Ensure path is correct
+  fetchAndRenderMarkdown(readmeUrl);
+}
 
-// Load the README.md file initially
-const loadReadme = async () => {
-  await fetchAndRenderMarkdown("Docs/README.md");
-};
+loadReadme();
+
+// FancyTree initialization
+$("#file-tree").fancytree({
+  extensions: [],
+  source: [ /* file tree data */ ],
+  clickFolderMode: 2,
+  init: function(event, data) {
+      data.tree.visit(function(node) {
+          node.setExpanded(true); // Expand all nodes statically
+      });
+  }
+});
+
 
 // Initial setup
 renderTree();
