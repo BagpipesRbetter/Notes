@@ -1,3 +1,4 @@
+/* General body styling */
 body {
     background-color: #000000;
     color: #ffffff;
@@ -5,6 +6,8 @@ body {
     padding: 20px;
     width: 90%;
   }
+  
+  /* Styling for the markdown content */
   #markdown-view {
     background-color: #1e1e1e;
     color: #dcdcdc;
@@ -14,6 +17,8 @@ body {
     white-space: pre-wrap;
     margin-bottom: 20px;
   }
+  
+  /* Styling for the FancyTree file tree container */
   #file-tree {
     margin-top: 20px;
     border-radius: 5px;
@@ -22,48 +27,64 @@ body {
     padding: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
   }
-  .jstree-default .jstree-anchor {
+  
+  /* FancyTree anchor link styling */
+  .fancytree-title {
     color: #ffffff !important;
     text-decoration: none !important;
     padding: 5px 10px !important;
     border-radius: 4px !important;
     transition: background-color 0.3s !important;
   }
-  .jstree-default .jstree-anchor:hover {
+  
+  /* Hover effect for FancyTree items */
+  .fancytree-title:hover {
     background-color: #444 !important;
     color: #ffffff !important;
   }
-  .jstree-default .jstree-icon {
+  
+  /* Custom icon for file tree */
+  span.fancytree-icon {
     margin-right: 5px !important;
   }
+  
+  /* Last updated date styling */
   .last-updated {
     margin-top: 20px;
     font-size: 0.9em;
     color: #888888;
   }
-  li.jstree-open > a .jstree-icon {
-    background: url("Images/foldero.svg") 0px 0px no-repeat !important;
+  
+  /* Custom folder and file icons for FancyTree */
+  span.fancytree-folder .fancytree-icon {
+    background: url("Images/folderc.svg") no-repeat center center !important;
   }
-  li.jstree-closed > a .jstree-icon {
-    background: url("Images/folderc.svg") 0px 0px no-repeat !important;
+  span.fancytree-expanded .fancytree-icon {
+    background: url("Images/foldero.svg") no-repeat center center !important;
   }
-  li.jstree-leaf > a .jstree-icon {
-    background: url("Images/file.svg") 0px 0px no-repeat !important;
+  span.fancytree-file .fancytree-icon {
+    background: url("Images/file.svg") no-repeat center center !important;
   }
-  li.jstree-leaf > a .jstree-icon.jstree-image {
-    background: url("Images/image.svg") 0px 0px no-repeat !important;
+  span.fancytree-image .fancytree-icon {
+    background: url("Images/image.svg") no-repeat center center !important;
   }
+  
+  /* Text formatting within markdown content */
   strong {
     color: #ffcd22;
   }
+  
   em {
     color: #8888ff;
     font-style: italic;
   }
+  
   del {
     color: #ff8888;
     text-decoration: line-through;
   }
+  
+  /* Image styling inside markdown content */
   img {
     max-width: 85%;
     height: auto;
