@@ -103,7 +103,7 @@ const fetchAndRenderMarkdown = async (filePath) => {
 
 // Load the README.md file initially
 const loadReadme = async () => {
-  await fetchAndRenderMarkdown("Notes/Docs/README.md");
+  await fetchAndRenderMarkdown("Docs/README.md");
 };
 
 // Initial setup
