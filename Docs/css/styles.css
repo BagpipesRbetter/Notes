@@ -1,0 +1,70 @@
+
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: monospace;
+            padding: 20px;
+            width: 90%;
+        }
+        #markdown-view {
+            background-color: #1e1e1e;
+            color: #dcdcdc;
+            padding: 15px;
+            border-radius: 5px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            margin-bottom: 20px; /* Spacing between markdown and tree */
+        }
+        #file-tree {
+            margin-top: 20px;
+            border-radius: 5px; /* Rounded corners */
+            overflow: hidden; /* Prevent overflow */
+            background-color: #1e1e1e; /* Background color for the tree */
+            padding: 10px; /* Inner padding */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
+        }
+        /* Customize jsTree styles */
+        .jstree-default .jstree-anchor {
+            color: #ffffff !important; /* Anchor text color */
+            text-decoration: none !important; /* Remove underline */
+            padding: 5px 10px !important; /* Padding for tree items */
+            border-radius: 4px !important; /* Rounded corners */
+            transition: background-color 0.3s !important; /* Smooth background transition */
+        }
+        .jstree-default .jstree-anchor:hover {
+            background-color: #444 !important; /* Background on hover */
+            color: #ffffff !important; /* Text color on hover */
+        }
+        .jstree-default .jstree-icon {
+            margin-right: 5px !important; /* Spacing for icons */
+        }
+        .last-updated {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #888888;
+        }
+        li.jstree-open > a .jstree-icon {background:url("Images/foldero.svg") 0px 0px no-repeat !important;}
+        li.jstree-closed > a .jstree-icon {background:url("Images/folderc.svg") 0px 0px no-repeat !important;}
+        li.jstree-leaf > a .jstree-icon {background:url("Images/file.svg") 0px 0px no-repeat !important;}
+        li.jstree-leaf > a .jstree-icon.jstree-image {background:url("Images/image.svg") 0px 0px no-repeat !important;}
+
+        strong {
+            color: #ffcd22; /* Bold color */
+        }
+        em {
+            color: #8888ff; /* Italics color */
+            font-style: italic;
+        }
+        del {
+            color: #ff8888; /* Strikethrough color */
+            text-decoration: line-through;
+        }
+        .last-updated {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #888888;
+        }
+        img {
+            max-width: 85%;
+            height: auto;
+        }
