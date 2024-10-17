@@ -1,3 +1,4 @@
+// GitHub repository info
 const repoOwner = "BagpipesRbetter";
 const repoName = "Notes";
 const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/`;
@@ -60,7 +61,7 @@ const renderTree = async () => {
 
 // Fetch and render the selected Markdown file
 const fetchAndRenderMarkdown = async (filePath) => {
-  const rawUrl = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/${filePath}`;
+  const rawUrl = `https://BagpipesRbetter.github.io/Notes/${filePath}`;
   console.log("Fetching Markdown from:", rawUrl);
 
   try {

@@ -57,16 +57,16 @@ body {
   
   /* Custom folder and file icons for FancyTree */
   span.fancytree-folder .fancytree-icon {
-    background: url("Images/folderc.svg") no-repeat center center !important;
+    background: url("/Notes/Images/folderc.svg") no-repeat center center !important; /* Updated path */
   }
   span.fancytree-expanded .fancytree-icon {
-    background: url("Images/foldero.svg") no-repeat center center !important;
+    background: url("/Notes/Images/foldero.svg") no-repeat center center !important; /* Updated path */
   }
   span.fancytree-file .fancytree-icon {
-    background: url("Images/file.svg") no-repeat center center !important;
+    background: url("/Notes/Images/file.svg") no-repeat center center !important; /* Updated path */
   }
   span.fancytree-image .fancytree-icon {
-    background: url("Images/image.svg") no-repeat center center !important;
+    background: url("/Notes/Images/image.svg") no-repeat center center !important; /* Updated path */
   }
   
   /* Text formatting within markdown content */
