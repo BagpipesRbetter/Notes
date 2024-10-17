@@ -84,8 +84,8 @@
     <div id="markdown-view"></div>
     <div id="file-tree"></div>
     <div class="last-updated" id="last-updated"></div>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery.fancytree/dist/skin-win8/ui.fancytree.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/jquery.fancytree/dist/jquery.fancytree-all-deps.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/jstree.min.js"></script>
     <script>
         const repoOwner = 'BagpipesRbetter';
@@ -109,39 +109,38 @@
         };
 
         const buildTreeData = async (url) => {
-            const response = await fetch(url);
-            const files = await response.json();
-            const treeData = [];
+    const response = await fetch(url);
+    const files = await response.json();
+    const treeData = [];
 
-            for (let file of files) {
-                if (file.type === 'file' && file.name.endsWith('.md')) {
-                    treeData.push({ text: file.name, id: file.path, icon: "jstree-file" });
-                } else if (file.type === 'file' && /\.(jpg|jpeg|png|gif|svg)$/i.test(file.name)) {
-                    treeData.push({ text: file.name, id: file.path, icon: "jstree-image" });
-                } else if (file.type === 'dir') {
-                    treeData.push({ text: file.name, id: file.path, children: await buildTreeData(file.url), icon: "jstree-folder" });
-                }
-            }
+    for (let file of files) {
+        if (file.type === 'file' && file.name.endsWith('.md')) {
+            treeData.push({ title: file.name, path: file.path, icon: "file" });
+        } else if (file.type === 'file' && /\.(jpg|jpeg|png|gif|svg)$/i.test(file.name)) {
+            treeData.push({ title: file.name, path: file.path, icon: "image" });
+        } else if (file.type === 'dir') {
+            treeData.push({ title: file.name, folder: true, children: await buildTreeData(file.url) });
+        }
+    }
 
-            return treeData;
-        };
+    return treeData;
+};
+
 
         const renderTree = async () => {
-            const treeData = await buildTreeData(apiUrl);
-            $('#file-tree').jstree({
-                'core': {
-                    'data': treeData
-                }
-            });
+    const treeData = await buildTreeData(apiUrl);
 
-            // Event listener for when a file is clicked
-            $('#file-tree').on('select_node.jstree', async (e, data) => {
-                if (data.node.children.length === 0) { // Only if it's a file
-                    await fetchAndRenderMarkdown(data.node.id);
-                }
-                
-            });
-        };
+    // Initialize FancyTree
+    $("#file-tree").fancytree({
+        source: treeData,
+        click: async function(event, data) {
+            if (!data.node.folder) {
+                await fetchAndRenderMarkdown(data.node.data.path);
+            }
+        }
+    });
+};
+
 
         const fetchAndRenderMarkdown = async (filePath) => {
     const rawUrl = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/${filePath}`;
