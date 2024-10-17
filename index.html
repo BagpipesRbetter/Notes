@@ -155,16 +155,11 @@
 
         var markdownText = await response.text();
 
-        // Replace ![[image.jpg]] with the full URL, maintaining the file's relative path for images
         markdownText = markdownText.replace(/!\[\[(.*?)\]\]/g, (match, p1) => {
-            const imageUrl = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/${filePath.substring(0, filePath.lastIndexOf('/') + 1)}${p1.trim()}`;
+            const imageUrl = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/Images/${p1.trim()}`;
             return `![${p1}](${imageUrl})`;
         });
 
-        // Replace [[Internal Link]] with an actual anchor tag
-        markdownText = markdownText.replace(/\[\[(.*?)\]\]/g, (match, p1) => {
-            return `<a href="#" data-link="${p1.trim()}">${p1.trim()}</a>`;
-        });
 
         markdownViewDiv.innerHTML = marked.parse(markdownText);
 
